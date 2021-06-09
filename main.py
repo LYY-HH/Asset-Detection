@@ -1,4 +1,5 @@
 from flask import Flask, request  # 导入Flask类
+from flask_restful import Api, Resource
 from app import *
 from tasks import work
 from bson import json_util
@@ -6,17 +7,13 @@ import json
 
 
 app = create_app()  # 实例化并命名为app实例
+api = Api(app)
 # 删除所有数据
 my_col.delete_many({})
 
 
-# 创建任务
-@app.route('/api/create_task', methods=['POST'])
-def create_task():
-    if request.method == 'POST':
-        #  缺少参数校验，方法一使用 flask_restful 中的 reqparse;
-        #  方法二，使用 WTforms，参考链接: https://zhuanlan.zhihu.com/p/336091060
-        #                                                                       ---wangyx
+class CreateTask(Resource):
+    def post(self):
         datajson = {
             'name': request.json.get('task_name'),
             'description': request.json.get('task_desc'),
@@ -34,10 +31,13 @@ def create_task():
 
 
 # 获取所有任务队列
-@app.route('/api/task/list', methods=['GET'])
-def task_list():
-    if request.method == 'GET':
+class TaskList(Resource):
+    def get(self):
         return json_util.dumps(my_col.find())
+
+
+api.add_resource(CreateTask, "/api/create_task")
+api.add_resource(TaskList, "/api/task/list")
 
 
 if __name__ == "__main__":
