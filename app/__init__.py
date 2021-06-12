@@ -10,8 +10,8 @@ my_db = my_client["detection"]
 # 连接集合
 my_col = my_db["tasks"]
 
-celery = Celery(__name__, broker='redis://localhost:6379//'
-                , backend='redis://')
+app_celery = Celery(__name__, broker='redis://localhost:6379//'
+                    , backend='redis://')
 
 
 def create_app():
