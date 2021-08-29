@@ -3,6 +3,8 @@
     <title>Flask + Celery Examples</title>
   </head>
   <body>
+   <h1>欢迎 {{ username }}！</h1>
+
     <h1>Flask + Celery Examples</h1>
     <h2>Example 1: Send Asynchronous Email</h2>
     <form method="POST">
@@ -10,5 +12,7 @@
       <input type="submit" name="submit" value="Send">
       <input type="submit" name="submit" value="Send in 1 minute">
     </form>
+
+  <a href='{{ url_for('blue_view_login.logout')}}'>登出</a>
   </body>
 </html>

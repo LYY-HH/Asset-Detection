@@ -15,5 +15,5 @@ app_celery = Celery(__name__, broker='redis://localhost:6379//'
 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__,  template_folder='../templates')
     return app

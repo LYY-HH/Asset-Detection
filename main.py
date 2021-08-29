@@ -9,13 +9,8 @@ from celery.result import AsyncResult
 from celery.app.control import Control
 
 app = create_app()  # 实例化并命名为app实例
-api = Api(app)
 celery_control = Control(app_celery)
 
-
-@app.route("/")
-def hello():
-    return "Hello World!"
 
 
 # 任务列表管理
@@ -81,9 +76,3 @@ class TaskState(Resource):
         return "ERROR"
 
 
-
-api.add_resource(TaskList, "/api/task")
-api.add_resource(TaskState, "/api/control")
-
-if __name__ == "__main__":
-    app.run(port=8080, host="127.0.0.1", debug=True)  # 调用run方法，设定端口号，启动服务
